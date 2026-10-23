@@ -67,18 +67,18 @@ Build mode: fast
 - [x] 9. Polish README.md with Devpost Learn context, planning docs references, and clean copy
 - [x] 10. Standard MIT LICENSE file formatting
 - [x] 11. Ensure devpost planning files are committed and only learner-profile.md is ignored
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
+- [x] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence: [to be recorded upon completion]
-Route and stops: [to be recorded upon completion]
-Edit outcome: [to be recorded upon completion]
-Reflection: [to be recorded upon completion]
-Activity mode: [to be recorded upon completion]
+Activity and evidence: Focused review connecting the learner's desired learning outcome (mastering plan-to-execution workflow) to the single storage ledger architecture (`src/services/storage.js`), verified oversell boundaries in `SellBottomSheet.jsx`, and verified tab-responsive header controls.
+Route and stops: 1. `src/components/SellBottomSheet.jsx` (UI trigger & oversell boundary), 2. `src/services/storage.js` (isolated ledger state mutations), 3. `src/components/Header.jsx` (compact restocking header vs sales dashboard).
+Edit outcome: Stock In button simplified to single "+ New" and compact restocking header applied and verified in commit `de5e300`.
+Reflection: Documented isolated storage ledger pattern as a reusable practice in `devpost/app-map.html`.
+Activity mode: Live app verified with dev server and standalone `devpost/app-map.html`.
 
 ## Revisions
