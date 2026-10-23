@@ -1,0 +1,58 @@
+/* Sopko Design Tokens - Matching PRD and Spec */
+:root {
+  /* Surfaces & Canvas */
+  --bg-app: #FAF9F5;
+  --bg-surface: #FFFFFF;
+  --bg-banner: #E8F3E8;
+  --bg-overlay: rgba(24, 29, 25, 0.4);
+  --border-card: 1px solid #E6E4DD;
+  --border-subtle: 1px solid #E4E2DC;
+  --border-nav: 1px solid #E2E0D8;
+
+  /* Text Colors */
+  --text-primary: #181D19;
+  --text-secondary: #606661;
+  --text-hero: #285E2B;
+  --text-link: #2B6CB0;
+
+  /* Buttons & Controls */
+  --btn-primary-bg: #2E6F34;
+  --btn-primary-text: #FFFFFF;
+  --btn-primary-shadow: 0 2px 5px rgba(46, 111, 52, 0.25);
+  --btn-onboard-bg: #68A856;
+  --btn-ghost-bg: #F0F2F5;
+  --btn-ghost-border: 1px solid #CBD2D9;
+  --btn-ghost-text: #52606D;
+
+  /* Stepper */
+  --stepper-bg: #DDE1E6;
+  --stepper-border: 1px solid #C4C9D0;
+  --stepper-text: #33373B;
+
+  /* Status Pills */
+  --pill-in-bg: #D3EED6;
+  --pill-in-text: #215A26;
+  --pill-low-bg: #F9E3BD;
+  --pill-low-text: #7A4B13;
+  --pill-out-bg: #FAD2CC;
+  --pill-out-text: #8C251D;
+
+  /* Navigation */
+  --nav-bg: #FAF9F5;
+  --nav-active: #2E6F34;
+  --nav-inactive: #5A605D;
+
+  /* Radii */
+  --radius-card: 12px;
+  --radius-button: 10px;
+  --radius-stepper: 8px;
+  --radius-pill: 9999px;
+  --radius-sheet: 20px;
+
+  /* Shadows */
+  --shadow-card: 0 3px 8px -2px rgba(24, 29, 25, 0.06), 0 2px 4px -1px rgba(24, 29, 25, 0.04);
+  --shadow-sheet: 0 -4px 16px rgba(0, 0, 0, 0.06);
+
+  /* Touch Target */
+  --min-touch-size: 44px;
+}
