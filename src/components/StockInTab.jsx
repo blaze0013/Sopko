@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { formatRupees } from '../utils/currency.js';
-import { Plus } from 'lucide-react';
 
 export function StockInTab({ items, onSelectRestock, onOpenNewItemModal }) {
   const [query, setQuery] = useState('');
@@ -29,10 +28,9 @@ export function StockInTab({ items, onSelectRestock, onOpenNewItemModal }) {
         <button
           className="btn-primary"
           onClick={onOpenNewItemModal}
-          style={{ whiteSpace: 'nowrap', flexShrink: 0, padding: '0 12px', fontSize: '14px' }}
+          style={{ whiteSpace: 'nowrap', flexShrink: 0, padding: '0 14px', fontSize: '14px' }}
         >
-          <Plus size={16} />
-          <span>+ New</span>
+          + New
         </button>
       </div>
 

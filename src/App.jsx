@@ -109,6 +109,7 @@ export function App() {
   return (
     <div className="app-container">
       <Header
+        activeTab={activeTab}
         items={store.items}
         sales={store.sales}
         isMenuOpen={isMenuOpen}

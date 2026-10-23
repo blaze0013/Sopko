@@ -4,6 +4,7 @@ import { formatHeaderDate, isToday } from '../utils/date.js';
 import { MenuDropdown } from './MenuDropdown.jsx';
 
 export function Header({
+  activeTab,
   items,
   sales,
   isMenuOpen,
@@ -14,6 +15,8 @@ export function Header({
   onResetData,
   onOpenGuide
 }) {
+  const isStockIn = activeTab === 'stock-in';
+
   // Calculate today's sales total
   const todaySalesTotal = sales
     .filter((s) => isToday(s.soldAt))
@@ -29,7 +32,7 @@ export function Header({
   ).length;
 
   return (
-    <header className="app-header">
+    <header className={`app-header ${isStockIn ? 'compact-header' : ''}`}>
       <div className="header-top-row">
         <div>
           <span className="header-brand">Sopko</span>
@@ -54,18 +57,16 @@ export function Header({
         onOpenGuide={onOpenGuide}
       />
 
-      <div className="header-metric-row">
-        <div>
-          <div className="metric-title">Today's Sales</div>
-          <div className="metric-value">{formatRupees(todaySalesTotal)}</div>
-        </div>
-
-        <div>
-          {outOfStockCount > 0 ? (
-            <span className="status-pill out-of-stock" style={{ marginRight: '6px' }}>
+      {isStockIn ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+            Restock status:
+          </span>
+          {outOfStockCount > 0 && (
+            <span className="status-pill out-of-stock">
               {outOfStockCount} out
             </span>
-          ) : null}
+          )}
 
           {lowStockCount > 0 ? (
             <span className="status-pill low-stock">
@@ -77,7 +78,32 @@ export function Header({
             </span>
           ) : null}
         </div>
-      </div>
+      ) : (
+        <div className="header-metric-row">
+          <div>
+            <div className="metric-title">Today's Sales</div>
+            <div className="metric-value">{formatRupees(todaySalesTotal)}</div>
+          </div>
+
+          <div>
+            {outOfStockCount > 0 ? (
+              <span className="status-pill out-of-stock" style={{ marginRight: '6px' }}>
+                {outOfStockCount} out
+              </span>
+            ) : null}
+
+            {lowStockCount > 0 ? (
+              <span className="status-pill low-stock">
+                {lowStockCount} low stock
+              </span>
+            ) : outOfStockCount === 0 ? (
+              <span className="status-pill in-stock">
+                All stocked
+              </span>
+            ) : null}
+          </div>
+        </div>
+      )}
     </header>
   );
 }
