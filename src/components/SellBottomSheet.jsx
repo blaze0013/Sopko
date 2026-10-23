@@ -4,50 +4,49 @@ import { formatRupees, paiseToRupees, rupeesToPaise } from '../utils/currency.js
 export function SellBottomSheet({ item, onClose, onConfirmSale }) {
   if (!item) return null;
 
+  const maxStock = item.currentStock;
   const [quantity, setQuantity] = useState(1);
-  const [attemptedOver, setAttemptedOver] = useState(false);
   const [customPriceRupees, setCustomPriceRupees] = useState(() =>
     paiseToRupees(item.sellPrice).toString()
   );
 
-  const maxStock = item.currentStock;
-  const isOverselling = quantity > maxStock;
+  const isAtMaxStock = quantity >= maxStock;
   const priceInPaise = rupeesToPaise(customPriceRupees);
   const totalInPaise = Math.max(0, quantity * priceInPaise);
 
   const handleDecrement = () => {
-    setAttemptedOver(false);
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
     }
   };
 
   const handleIncrement = () => {
-    if (quantity >= maxStock) {
-      setAttemptedOver(true);
-    } else {
-      setAttemptedOver(false);
+    if (quantity < maxStock) {
       setQuantity((prev) => prev + 1);
     }
   };
 
   const handleQuantityChange = (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (isNaN(val)) {
+    const rawVal = e.target.value;
+    if (rawVal === '') {
       setQuantity(0);
-      setAttemptedOver(false);
+      return;
+    }
+    const val = parseInt(rawVal, 10);
+    if (isNaN(val)) return;
+
+    // Strict boundary: quantity can NEVER exceed current stock
+    if (val > maxStock) {
+      setQuantity(maxStock);
+    } else if (val < 0) {
+      setQuantity(0);
     } else {
       setQuantity(val);
-      if (val >= maxStock) {
-        setAttemptedOver(true);
-      } else {
-        setAttemptedOver(false);
-      }
     }
   };
 
   const handleConfirm = () => {
-    if (quantity < 1 || isOverselling || priceInPaise <= 0) return;
+    if (quantity < 1 || quantity > maxStock || priceInPaise <= 0) return;
     onConfirmSale({
       itemId: item.id,
       quantity,
@@ -61,14 +60,14 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
         <div className="sheet-handle" />
 
         <div className="sheet-header">
-          <div>
-            <div className="sheet-title">{item.name}</div>
-            <div style={{ marginTop: '4px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <div className="sheet-title" style={{ wordBreak: 'break-word' }}>{item.name}</div>
+            <div style={{ marginTop: '4px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
               <span className="status-pill in-stock">
                 {maxStock} available
               </span>
               {item.unit && (
-                <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                <span style={{ fontSize: '13px', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
                   Unit: {item.unit}
                 </span>
               )}
@@ -80,7 +79,7 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
         </div>
 
         {/* Quantity Stepper Row */}
-        <div className="sheet-row">
+        <div className="sheet-row" style={{ flexWrap: 'wrap', gap: '8px' }}>
           <span className="sheet-label">Quantity to Sell:</span>
           <div className="stepper-container">
             <button
@@ -102,8 +101,9 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
             />
             <button
               type="button"
-              className="stepper-btn"
+              className={`stepper-btn ${isAtMaxStock ? 'is-disabled' : ''}`}
               onClick={handleIncrement}
+              disabled={isAtMaxStock}
               aria-label="Increase quantity"
             >
               +
@@ -111,15 +111,18 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
           </div>
         </div>
 
-        {/* Short red message directly under stepper */}
-        {(isOverselling || (attemptedOver && quantity >= maxStock)) && (
+        {/* Stock-limit amber note when quantity reaches available stock */}
+        {isAtMaxStock && (
           <div
             style={{
-              color: 'var(--pill-out-text)',
+              backgroundColor: '#F9E3BD',
+              color: '#7A4B13',
+              padding: '6px 12px',
+              borderRadius: '8px',
               fontSize: '13px',
               fontWeight: 700,
-              textAlign: 'right',
-              marginTop: '-8px'
+              textAlign: 'center',
+              marginTop: '-4px'
             }}
           >
             Only {maxStock} left in stock
@@ -127,7 +130,7 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
         )}
 
         {/* Unit Price Row (Pre-filled, editable) */}
-        <div className="sheet-row">
+        <div className="sheet-row" style={{ flexWrap: 'wrap', gap: '8px' }}>
           <span className="sheet-label">Unit Price (₹):</span>
           <div className="price-input-box">
             <span>₹</span>
@@ -145,12 +148,10 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
         <button
           className="btn-primary"
           style={{ width: '100%', height: '52px', fontSize: '18px', marginTop: '4px' }}
-          disabled={quantity < 1 || isOverselling || priceInPaise <= 0}
+          disabled={quantity < 1 || quantity > maxStock || priceInPaise <= 0}
           onClick={handleConfirm}
         >
-          {isOverselling
-            ? 'Cannot oversell'
-            : `Sell ${formatRupees(totalInPaise)}`}
+          Sell {formatRupees(totalInPaise)}
         </button>
       </div>
     </div>

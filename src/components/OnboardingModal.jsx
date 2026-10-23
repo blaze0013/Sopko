@@ -28,43 +28,43 @@ export function OnboardingModal({ isOpen, onClose, onLoadSampleData }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '440px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <div style={{ fontSize: '32px', marginBottom: '6px' }}>🏪</div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: 'var(--text-hero)' }}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '440px', padding: '20px 16px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+          <div style={{ fontSize: '30px', marginBottom: '4px' }}>🏪</div>
+          <h2 style={{ fontSize: '20px', fontWeight: 800, color: 'var(--text-hero)' }}>
             Welcome to Sopko
           </h2>
-          <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginTop: '4px' }}>
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '2px' }}>
             Lightweight stock and sales tracking for kirana stores.
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
           {steps.map((s) => (
-            <div key={s.num} style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+            <div key={s.num} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
               <div
                 style={{
-                  width: '28px',
-                  height: '28px',
-                  minWidth: '28px',
+                  width: '26px',
+                  height: '26px',
+                  minWidth: '26px',
                   borderRadius: '50%',
                   backgroundColor: '#407A45',
                   color: '#FFFFFF',
                   fontWeight: 800,
-                  fontSize: '14px',
+                  fontSize: '13px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginTop: '2px'
+                  marginTop: '1px'
                 }}
               >
                 {s.num}
               </div>
-              <div>
-                <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)' }}>
+              <div style={{ minWidth: 0, flex: 1 }}>
+                <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)' }}>
                   {s.title}
                 </div>
-                <div style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                <div style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.35 }}>
                   {s.desc}
                 </div>
               </div>
@@ -72,14 +72,14 @@ export function OnboardingModal({ isOpen, onClose, onLoadSampleData }) {
           ))}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <button
             className="btn-primary"
             style={{
               backgroundColor: 'var(--btn-onboard-bg)',
               width: '100%',
               height: '46px',
-              fontSize: '16px'
+              fontSize: '15px'
             }}
             onClick={onClose}
           >
@@ -87,7 +87,7 @@ export function OnboardingModal({ isOpen, onClose, onLoadSampleData }) {
           </button>
           <button
             className="btn-secondary"
-            style={{ width: '100%', height: '44px' }}
+            style={{ width: '100%', height: '42px', fontSize: '14px' }}
             onClick={() => {
               onLoadSampleData();
               onClose();

@@ -39,7 +39,7 @@ Build mode: fast
   Learner check: Tap the "Stock in" bottom tab, search for an item, tap to add 10 units of stock, then tap "+ New item" to create a new product and switch back to "Stock out" to verify it is listed.
   Commit: `Add bottom navigation and stock in tab with restock and new item forms`
 
-- [ ] **4. Onboarding guide modal, top-right menu, UTF-8 CSV exports, README & MIT license**
+- [x] **4. Onboarding guide modal, top-right menu, UTF-8 CSV exports, README & MIT license**
   Becomes usable: Automatic 4-step onboarding modal ("How it works") on empty storage or first launch. Top-right `⋮` menu (`MenuDropdown.jsx`) with "How it works", "Load Sample Data" (with overwrite confirmation), and 3 separate one-tap CSV downloads (Sales, Stock In, Current Stock) with UTF-8 BOM (`\uFEFF`) for perfect display in Excel. Includes project `README.md` and MIT `LICENSE`.
   Why now: Delivers the final polish, user onboarding, demo accelerator, data backup/export, and open-source documentation required for the hackathon proof of concept and submission video.
   PRD ref: `prd.md > 1. Onboarding Guide ("How it works")`, `prd.md > 5. Data Management, Export & Sample Data`
@@ -56,6 +56,17 @@ Build mode: fast
 
 ## Final Review
 
+- [x] 1. Move Sample Data button out of search row into ⋮ menu; keep prominent button on empty state
+- [x] 2. Add "Reset all data" to ⋮ menu with confirmation dialog and clean empty state
+- [x] 3. Sell sheet: show amber (#7A4B13) "Only N left in stock" when quantity equals available stock, with clear disabled + button
+- [x] 4. Fix horizontal overflow on 320px and 360px mobile screens (shrink search, '+ New' button, prevent sideways scrolling)
+- [x] 5. Responsive overflow safety on Sell sheet, New item form, and How it works modal at 320px/360px
+- [x] 6. Stock In cards: bold "N in stock", unit and barcode on smaller lighter second line without mid-phrase wrapping
+- [x] 7. Stock In cards: "Last cost ₹X" under item name so "+ Restock" stays on one line
+- [x] 8. Lighter, smaller barcodes on all cards so item name, price, and stock pills stand out
+- [x] 9. Polish README.md with Devpost Learn context, planning docs references, and clean copy
+- [x] 10. Standard MIT LICENSE file formatting
+- [x] 11. Ensure devpost planning files are committed and only learner-profile.md is ignored
 - [ ] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map

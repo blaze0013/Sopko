@@ -7,7 +7,8 @@ import {
   addItem,
   downloadCSV,
   isOnboarded,
-  setOnboarded
+  setOnboarded,
+  resetStore
 } from './services/storage.js';
 import { Header } from './components/Header.jsx';
 import { StockOutTab } from './components/StockOutTab.jsx';
@@ -45,6 +46,17 @@ export function App() {
       setStore(fresh);
       setSelectedSellItem(null);
       setSelectedRestockItem(null);
+      setIsMenuOpen(false);
+    }
+  };
+
+  const handleResetData = () => {
+    if (window.confirm('Reset all data? This will clear all items and sales records.')) {
+      const empty = resetStore();
+      setStore(empty);
+      setSelectedSellItem(null);
+      setSelectedRestockItem(null);
+      setIsMenuOpen(false);
     }
   };
 
@@ -104,6 +116,7 @@ export function App() {
         onCloseMenu={() => setIsMenuOpen(false)}
         onExport={handleExport}
         onLoadSampleData={handleLoadSampleData}
+        onResetData={handleResetData}
         onOpenGuide={() => setIsGuideOpen(true)}
       />
 

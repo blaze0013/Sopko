@@ -125,3 +125,4 @@ export function RestockModal({ item, onClose, onConfirmRestock }) {
     </div>
   );
 }
+

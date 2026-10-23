@@ -65,6 +65,16 @@ export function seedSampleData() {
 }
 
 /**
+ * Resets store to clean empty state
+ * @returns {Object}
+ */
+export function resetStore() {
+  const empty = getEmptyStore();
+  saveStore(empty);
+  return empty;
+}
+
+/**
  * Checks whether user has completed first-visit onboarding
  * @returns {boolean}
  */

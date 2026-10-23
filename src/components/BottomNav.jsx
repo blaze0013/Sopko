@@ -24,3 +24,4 @@ export function BottomNav({ activeTab, onTabChange }) {
     </nav>
   );
 }
+

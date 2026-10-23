@@ -40,17 +40,17 @@ export function NewItemModal({ onClose, onSaveNewItem }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ padding: '20px 16px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h2 style={{ fontSize: '19px', fontWeight: 800 }}>+ Add New Product</h2>
+          <h2 style={{ fontSize: '18px', fontWeight: 800 }}>+ Add New Product</h2>
           <button className="sheet-close-btn" onClick={onClose} aria-label="Close">
             ✕
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '6px' }}>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '4px' }}>
               Product Name *
             </label>
             <input
@@ -59,17 +59,17 @@ export function NewItemModal({ onClose, onSaveNewItem }) {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Good Day Butter Biscuits"
+              placeholder="e.g. Good Day Biscuits"
               autoFocus
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '6px' }}>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '4px' }}>
                 Sell Price (₹) *
               </label>
-              <div className="price-input-box" style={{ width: '100%' }}>
+              <div className="price-input-box" style={{ width: '100%', minWidth: 0 }}>
                 <span>₹</span>
                 <input
                   type="number"
@@ -83,11 +83,11 @@ export function NewItemModal({ onClose, onSaveNewItem }) {
               </div>
             </div>
 
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '6px' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '4px' }}>
                 Cost Price (₹)
               </label>
-              <div className="price-input-box" style={{ width: '100%' }}>
+              <div className="price-input-box" style={{ width: '100%', minWidth: 0 }}>
                 <span>₹</span>
                 <input
                   type="number"
@@ -101,9 +101,9 @@ export function NewItemModal({ onClose, onSaveNewItem }) {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '6px' }}>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '4px' }}>
                 Starting Stock
               </label>
               <input
@@ -116,8 +116,8 @@ export function NewItemModal({ onClose, onSaveNewItem }) {
               />
             </div>
 
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '6px' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '4px' }}>
                 Low-Stock Alert
               </label>
               <input
@@ -131,9 +131,9 @@ export function NewItemModal({ onClose, onSaveNewItem }) {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '6px' }}>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '4px' }}>
                 Unit (Optional)
               </label>
               <input
@@ -141,13 +141,13 @@ export function NewItemModal({ onClose, onSaveNewItem }) {
                 className="search-input"
                 value={unit}
                 onChange={(e) => setUnit(e.target.value)}
-                placeholder="packet / kg / L"
+                placeholder="packet / kg"
               />
             </div>
 
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, marginBottom: '6px' }}>
-                Code / SKU (Optional)
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, marginBottom: '4px' }}>
+                Code / SKU
               </label>
               <input
                 type="text"
@@ -159,7 +159,7 @@ export function NewItemModal({ onClose, onSaveNewItem }) {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+          <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
             <button
               type="button"
               className="btn-secondary"

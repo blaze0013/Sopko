@@ -19,16 +19,16 @@ export function StockOutTab({ items, onSelectItem, onLoadSampleData, onGoToStock
       <div className="content-area">
         <div className="empty-state-box">
           <div style={{ fontSize: '42px' }}>🏪</div>
-          <div className="empty-title">Welcome to Sopko!</div>
+          <div className="empty-title">No items in stock yet</div>
           <div className="empty-desc">
-            Your stock list is currently empty. You can add items one by one, or load realistic sample items to explore.
+            Add your first item or load sample data to get started.
           </div>
           <button
             className="btn-primary"
             onClick={onLoadSampleData}
             style={{ width: '100%', maxWidth: '280px', marginTop: '8px' }}
           >
-            Load Sample Data
+            Load Sample Kirana Data
           </button>
           <button
             className="btn-secondary"
@@ -52,13 +52,6 @@ export function StockOutTab({ items, onSelectItem, onLoadSampleData, onGoToStock
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button
-          className="btn-secondary"
-          title="Reload sample kirana store data"
-          onClick={onLoadSampleData}
-        >
-          Sample Data
-        </button>
       </div>
 
       <div className="items-list">
@@ -91,8 +84,16 @@ export function StockOutTab({ items, onSelectItem, onLoadSampleData, onGoToStock
                 <div className="item-info">
                   <div className="item-name">{item.name}</div>
                   <div className="item-meta">
-                    {item.unit && <span>{item.unit}</span>}
-                    {item.code && <span>• #{item.code}</span>}
+                    {item.unit && (
+                      <span style={{ whiteSpace: 'nowrap', fontWeight: 500 }}>
+                        {item.unit}
+                      </span>
+                    )}
+                    {item.code && (
+                      <span className="barcode-tag">
+                        #{item.code}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -108,4 +109,3 @@ export function StockOutTab({ items, onSelectItem, onLoadSampleData, onGoToStock
     </div>
   );
 }
-

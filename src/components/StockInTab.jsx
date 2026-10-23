@@ -17,26 +17,27 @@ export function StockInTab({ items, onSelectRestock, onOpenNewItemModal }) {
 
   return (
     <div className="content-area">
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', alignItems: 'center' }}>
         <input
           type="search"
           className="search-input"
-          placeholder="Search items to restock..."
+          style={{ minWidth: 0, flex: 1 }}
+          placeholder="Search items..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         <button
           className="btn-primary"
           onClick={onOpenNewItemModal}
-          style={{ whiteSpace: 'nowrap' }}
+          style={{ whiteSpace: 'nowrap', flexShrink: 0, padding: '0 12px', fontSize: '14px' }}
         >
-          <Plus size={18} />
-          <span>New Item</span>
+          <Plus size={16} />
+          <span>+ New</span>
         </button>
       </div>
 
       <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
-        Tap any product below to log arriving stock & cost:
+        Tap any product below to log arriving delivery:
       </div>
 
       <div className="items-list">
@@ -50,21 +51,45 @@ export function StockInTab({ items, onSelectRestock, onOpenNewItemModal }) {
               key={item.id}
               className="item-card"
               onClick={() => onSelectRestock(item)}
+              style={{ alignItems: 'center', gap: '10px' }}
             >
-              <div className="item-info">
-                <div className="item-name">{item.name}</div>
-                <div className="item-meta">
-                  <span>Current: <strong>{item.currentStock} {item.unit || 'units'}</strong></span>
-                  {item.code && <span>• #{item.code}</span>}
+              <div className="item-info" style={{ minWidth: 0 }}>
+                <div className="item-name" style={{ wordBreak: 'break-word' }}>{item.name}</div>
+                
+                {/* Last cost under item name */}
+                <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                  Last cost: <strong>{formatRupees(item.costPrice)}</strong>
+                </div>
+
+                {/* Stock count and meta line */}
+                <div style={{ marginTop: '4px', display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'baseline' }}>
+                  <span style={{ fontSize: '14px', fontWeight: 800, color: item.currentStock === 0 ? 'var(--pill-out-text)' : 'var(--text-primary)' }}>
+                    {item.currentStock} in stock
+                  </span>
+                  
+                  {(item.unit || item.code) && (
+                    <span style={{ fontSize: '12px', color: '#8A918C' }}>
+                      {item.unit && <span style={{ whiteSpace: 'nowrap' }}>• {item.unit}</span>}
+                      {item.code && <span className="barcode-tag" style={{ marginLeft: '4px' }}>#{item.code}</span>}
+                    </span>
+                  )}
                 </div>
               </div>
 
-              <div className="item-pricing">
-                <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Last Cost:</div>
-                <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                  {formatRupees(item.costPrice)}
-                </div>
-                <span className="status-pill in-stock" style={{ background: '#E0EAE2', color: '#1B4D20' }}>
+              {/* Restock button on the right */}
+              <div style={{ flexShrink: 0 }}>
+                <span
+                  className="status-pill in-stock"
+                  style={{
+                    backgroundColor: '#E0EAE2',
+                    color: '#1B4D20',
+                    padding: '6px 14px',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    display: 'inline-block',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
                   + Restock
                 </span>
               </div>

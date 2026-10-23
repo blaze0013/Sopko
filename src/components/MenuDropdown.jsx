@@ -1,7 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { Download, RefreshCw, HelpCircle, FileSpreadsheet } from 'lucide-react';
+import { Download, RefreshCw, HelpCircle, FileSpreadsheet, Trash2 } from 'lucide-react';
 
-export function MenuDropdown({ isOpen, onClose, onExport, onLoadSampleData, onOpenGuide }) {
+export function MenuDropdown({
+  isOpen,
+  onClose,
+  onExport,
+  onLoadSampleData,
+  onResetData,
+  onOpenGuide
+}) {
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -86,6 +93,20 @@ export function MenuDropdown({ isOpen, onClose, onExport, onLoadSampleData, onOp
         <RefreshCw size={16} color="#52606D" />
         <span>Load Sample Data</span>
       </button>
+
+      <button
+        className="menu-item-btn"
+        style={{ color: '#B91C1C' }}
+        onClick={() => {
+          onResetData();
+          onClose();
+        }}
+      >
+        <Trash2 size={16} color="#B91C1C" />
+        <span>Reset all data</span>
+      </button>
+
+      <div style={{ height: '1px', backgroundColor: '#ECEAE4', margin: '4px 0' }} />
 
       <button
         className="menu-item-btn"

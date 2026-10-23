@@ -11,6 +11,7 @@ export function Header({
   onCloseMenu,
   onExport,
   onLoadSampleData,
+  onResetData,
   onOpenGuide
 }) {
   // Calculate today's sales total
@@ -49,6 +50,7 @@ export function Header({
         onClose={onCloseMenu}
         onExport={onExport}
         onLoadSampleData={onLoadSampleData}
+        onResetData={onResetData}
         onOpenGuide={onOpenGuide}
       />
 
