@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
-import { loadStore, seedSampleData, recordSale, addStock, addItem } from './services/storage.js';
+import {
+  loadStore,
+  seedSampleData,
+  recordSale,
+  addStock,
+  addItem,
+  downloadCSV,
+  isOnboarded,
+  setOnboarded
+} from './services/storage.js';
 import { Header } from './components/Header.jsx';
 import { StockOutTab } from './components/StockOutTab.jsx';
 import { StockInTab } from './components/StockInTab.jsx';
 import { SellBottomSheet } from './components/SellBottomSheet.jsx';
 import { RestockModal } from './components/RestockModal.jsx';
 import { NewItemModal } from './components/NewItemModal.jsx';
+import { OnboardingModal } from './components/OnboardingModal.jsx';
 import { BottomNav } from './components/BottomNav.jsx';
 
 export function App() {
@@ -21,6 +31,13 @@ export function App() {
   const [selectedSellItem, setSelectedSellItem] = useState(null);
   const [selectedRestockItem, setSelectedRestockItem] = useState(null);
   const [isNewItemModalOpen, setIsNewItemModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(() => !isOnboarded());
+
+  const handleCloseGuide = () => {
+    setOnboarded();
+    setIsGuideOpen(false);
+  };
 
   const handleLoadSampleData = () => {
     if (window.confirm('Load sample kirana data? This will reset items and 7-day sales.')) {
@@ -69,12 +86,25 @@ export function App() {
     }
   };
 
+  const handleExport = (type) => {
+    try {
+      downloadCSV(type);
+    } catch (err) {
+      alert('Export failed: ' + err.message);
+    }
+  };
+
   return (
     <div className="app-container">
       <Header
         items={store.items}
         sales={store.sales}
-        onMenuClick={() => alert('Menu (Export CSV & Guide) will be available in Slice 4!')}
+        isMenuOpen={isMenuOpen}
+        onToggleMenu={() => setIsMenuOpen((prev) => !prev)}
+        onCloseMenu={() => setIsMenuOpen(false)}
+        onExport={handleExport}
+        onLoadSampleData={handleLoadSampleData}
+        onOpenGuide={() => setIsGuideOpen(true)}
       />
 
       {activeTab === 'stock-out' && (
@@ -117,6 +147,12 @@ export function App() {
           onSaveNewItem={handleSaveNewItem}
         />
       )}
+
+      <OnboardingModal
+        isOpen={isGuideOpen}
+        onClose={handleCloseGuide}
+        onLoadSampleData={handleLoadSampleData}
+      />
 
       <BottomNav
         activeTab={activeTab}

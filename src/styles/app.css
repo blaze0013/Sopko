@@ -310,6 +310,27 @@ body {
   max-width: 280px;
 }
 
+/* Menu Dropdown */
+.menu-item-btn {
+  width: 100%;
+  padding: 12px 14px;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.1s ease;
+}
+
+.menu-item-btn:hover, .menu-item-btn:active {
+  background-color: #F4F6F4;
+}
+
 /* Modals & Overlays */
 .modal-overlay {
   position: fixed;

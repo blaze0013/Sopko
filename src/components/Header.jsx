@@ -1,8 +1,18 @@
 import React from 'react';
 import { formatRupees } from '../utils/currency.js';
 import { formatHeaderDate, isToday } from '../utils/date.js';
+import { MenuDropdown } from './MenuDropdown.jsx';
 
-export function Header({ items, sales, onMenuClick }) {
+export function Header({
+  items,
+  sales,
+  isMenuOpen,
+  onToggleMenu,
+  onCloseMenu,
+  onExport,
+  onLoadSampleData,
+  onOpenGuide
+}) {
   // Calculate today's sales total
   const todaySalesTotal = sales
     .filter((s) => isToday(s.soldAt))
@@ -28,11 +38,19 @@ export function Header({ items, sales, onMenuClick }) {
         <button
           className="header-menu-btn"
           aria-label="More options"
-          onClick={onMenuClick}
+          onClick={onToggleMenu}
         >
           ⋮
         </button>
       </div>
+
+      <MenuDropdown
+        isOpen={isMenuOpen}
+        onClose={onCloseMenu}
+        onExport={onExport}
+        onLoadSampleData={onLoadSampleData}
+        onOpenGuide={onOpenGuide}
+      />
 
       <div className="header-metric-row">
         <div>
@@ -61,4 +79,3 @@ export function Header({ items, sales, onMenuClick }) {
     </header>
   );
 }
-

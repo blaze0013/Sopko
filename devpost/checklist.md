@@ -29,7 +29,7 @@ Build mode: fast
   Learner check: Tap an item card (e.g. Parle-G), test that the `+` stepper stops at available stock, tap "Sell ₹X", and confirm the card's stock decreases and the top header's ₹ total increases immediately.
   Commit: `Add sell bottom sheet with oversell protection and sales ledger updates`
 
-- [ ] **3. Bottom navigation & Stock In tab with search, quick restock & new item form**
+- [x] **3. Bottom navigation & Stock In tab with search, quick restock & new item form**
   Becomes usable: A fixed bottom navigation bar allowing seamless switching between "Stock out" and "Stock in". The Stock In tab features a search bar, quick restock modal (`RestockModal.jsx`) to add quantity and cost to existing items (updating `stockIns[]` ledger), and a "+ New item" modal (`NewItemModal.jsx`) to add new products with low-stock threshold defaulting to 5.
   Why now: Completes the full store cycle (receiving deliveries and creating new goods) so the shopkeeper can manage inventory without manual database manipulation.
   PRD ref: `prd.md > 4. Stock In & Inventory Management`, `prd.md > Screens and Layout > Bottom Navigation Bar`
