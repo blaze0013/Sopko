@@ -9,7 +9,7 @@ Build mode: fast
 
 ## Slices
 
-- [ ] **1. Bootstrap project, design tokens, storage ledger, sample data & Stock Out inventory view**
+- [x] **1. Bootstrap project, design tokens, storage ledger, sample data & Stock Out inventory view**
   Becomes usable: A running mobile-first Vite + React app styled with the exact warm design tokens (`tokens.css`). Renders the persistent header (today's date, ₹0 sales or seeded sales, low-stock count pill), a "Load sample data" button for instant seeding with 7-day sales history, and the Stock Out screen with item cards, prices, and stock pills (`In stock`, `Low stock`, `Out of stock`) loaded from `storage.js`.
   Why now: Bootstraps the application, verifies Vite and React tooling, locks in the tactile visual tokens, and confirms the storage service can seed and render inventory immediately so all subsequent slices have realistic data to test against.
   PRD ref: `prd.md > The Core Journey` (steps 1–2), `prd.md > Look and Feel`, `prd.md > 2. Header Banner & Daily Sales Tracking`, `prd.md > 5. Data Management, Export & Sample Data`

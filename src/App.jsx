@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { loadStore, seedSampleData, saveStore } from './services/storage.js';
+import React, { useState } from 'react';
+import { loadStore, seedSampleData, recordSale } from './services/storage.js';
 import { Header } from './components/Header.jsx';
 import { StockOutTab } from './components/StockOutTab.jsx';
+import { SellBottomSheet } from './components/SellBottomSheet.jsx';
 
 export function App() {
   const [store, setStore] = useState(() => {
@@ -9,22 +10,36 @@ export function App() {
     if (existing.items && existing.items.length > 0) {
       return existing;
     }
-    // Auto-seed sample data on first load for testing
     return seedSampleData();
   });
 
   const [activeTab, setActiveTab] = useState('stock-out');
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleLoadSampleData = () => {
     if (window.confirm('Load sample kirana data? This will reset items and 7-day sales.')) {
       const fresh = seedSampleData();
       setStore(fresh);
+      setSelectedItem(null);
     }
   };
 
   const handleSelectItem = (item) => {
-    console.log('Selected item for sale:', item);
-    // Slice 2 wires the Sell Bottom Sheet!
+    if (item.currentStock === 0) {
+      alert(`"${item.name}" is out of stock! Switch to Stock In to add inventory.`);
+      return;
+    }
+    setSelectedItem(item);
+  };
+
+  const handleConfirmSale = ({ itemId, quantity, unitPrice }) => {
+    try {
+      const { store: updatedStore } = recordSale({ itemId, quantity, unitPrice });
+      setStore({ ...updatedStore });
+      setSelectedItem(null);
+    } catch (err) {
+      alert(err.message || 'Failed to complete sale');
+    }
   };
 
   return (
@@ -41,6 +56,14 @@ export function App() {
           onSelectItem={handleSelectItem}
           onLoadSampleData={handleLoadSampleData}
           onGoToStockIn={() => setActiveTab('stock-in')}
+        />
+      )}
+
+      {selectedItem && (
+        <SellBottomSheet
+          item={selectedItem}
+          onClose={() => setSelectedItem(null)}
+          onConfirmSale={handleConfirmSale}
         />
       )}
     </div>
