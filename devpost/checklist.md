@@ -19,7 +19,7 @@ Build mode: fast
   Learner check: Open `http://localhost:5173` on mobile or in DevTools mobile view; tap "Load sample data", verify the warm cream canvas, top header banner with today's date and ₹ total, and item cards with status pills render smoothly.
   Commit: `Bootstrap Vite app with design tokens, storage ledger, and stock out view`
 
-- [ ] **2. Tap-to-sell bottom sheet with oversell protection & live sales tracking**
+- [x] **2. Tap-to-sell bottom sheet with oversell protection & live sales tracking**
   Becomes usable: Tapping an in-stock card on Stock Out opens `SellBottomSheet.jsx`. Shopkeeper can adjust quantity with `- 1 +` stepper (which physically caps at current stock and displays "Only N left in stock" if typed over), edit selling price, and tap "Sell ₹X". The sale is appended to `sales[]`, item stock decrements immediately on screen, and today's ₹ total and low-stock pill update in real time.
   Why now: This is the Unique Kernel—countertop-speed sale logging with instant inventory reduction and oversell prevention. Building it here proves the core loop and state mechanics before adding auxiliary screens.
   PRD ref: `prd.md > 3. Stock Out & Counter Sales`
@@ -51,7 +51,7 @@ Build mode: fast
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — Slice 2 (Sell bottom sheet & kernel sales loop)
+- [x] Early usable behavior explored — Slice 2 (Sell bottom sheet & kernel sales loop)
 - [ ] Final kick-the-tires exploration and feedback completed — Slice 4
 
 ## Final Review

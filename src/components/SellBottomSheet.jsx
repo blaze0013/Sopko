@@ -5,6 +5,7 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
   if (!item) return null;
 
   const [quantity, setQuantity] = useState(1);
+  const [attemptedOver, setAttemptedOver] = useState(false);
   const [customPriceRupees, setCustomPriceRupees] = useState(() =>
     paiseToRupees(item.sellPrice).toString()
   );
@@ -15,13 +16,17 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
   const totalInPaise = Math.max(0, quantity * priceInPaise);
 
   const handleDecrement = () => {
+    setAttemptedOver(false);
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
     }
   };
 
   const handleIncrement = () => {
-    if (quantity < maxStock) {
+    if (quantity >= maxStock) {
+      setAttemptedOver(true);
+    } else {
+      setAttemptedOver(false);
       setQuantity((prev) => prev + 1);
     }
   };
@@ -30,8 +35,14 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
     const val = parseInt(e.target.value, 10);
     if (isNaN(val)) {
       setQuantity(0);
+      setAttemptedOver(false);
     } else {
       setQuantity(val);
+      if (val >= maxStock) {
+        setAttemptedOver(true);
+      } else {
+        setAttemptedOver(false);
+      }
     }
   };
 
@@ -68,13 +79,6 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
           </button>
         </div>
 
-        {/* Oversell Warning */}
-        {isOverselling && (
-          <div className="oversell-warning">
-            Only {maxStock} left in stock.
-          </div>
-        )}
-
         {/* Quantity Stepper Row */}
         <div className="sheet-row">
           <span className="sheet-label">Quantity to Sell:</span>
@@ -100,13 +104,27 @@ export function SellBottomSheet({ item, onClose, onConfirmSale }) {
               type="button"
               className="stepper-btn"
               onClick={handleIncrement}
-              disabled={quantity >= maxStock}
               aria-label="Increase quantity"
             >
               +
             </button>
           </div>
         </div>
+
+        {/* Short red message directly under stepper */}
+        {(isOverselling || (attemptedOver && quantity >= maxStock)) && (
+          <div
+            style={{
+              color: 'var(--pill-out-text)',
+              fontSize: '13px',
+              fontWeight: 700,
+              textAlign: 'right',
+              marginTop: '-8px'
+            }}
+          >
+            Only {maxStock} left in stock
+          </div>
+        )}
 
         {/* Unit Price Row (Pre-filled, editable) */}
         <div className="sheet-row">
