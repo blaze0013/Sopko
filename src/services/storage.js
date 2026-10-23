@@ -275,3 +275,4 @@ export function downloadCSV(type) {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
+

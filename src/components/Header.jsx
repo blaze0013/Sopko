@@ -61,3 +61,4 @@ export function Header({ items, sales, onMenuClick }) {
     </header>
   );
 }
+

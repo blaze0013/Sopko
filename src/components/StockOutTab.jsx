@@ -108,3 +108,4 @@ export function StockOutTab({ items, onSelectItem, onLoadSampleData, onGoToStock
     </div>
   );
 }
+

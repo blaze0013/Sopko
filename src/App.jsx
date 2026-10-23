@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { loadStore, seedSampleData, recordSale } from './services/storage.js';
+import { loadStore, seedSampleData, recordSale, addStock, addItem } from './services/storage.js';
 import { Header } from './components/Header.jsx';
 import { StockOutTab } from './components/StockOutTab.jsx';
+import { StockInTab } from './components/StockInTab.jsx';
 import { SellBottomSheet } from './components/SellBottomSheet.jsx';
+import { RestockModal } from './components/RestockModal.jsx';
+import { NewItemModal } from './components/NewItemModal.jsx';
+import { BottomNav } from './components/BottomNav.jsx';
 
 export function App() {
   const [store, setStore] = useState(() => {
@@ -14,31 +18,54 @@ export function App() {
   });
 
   const [activeTab, setActiveTab] = useState('stock-out');
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedSellItem, setSelectedSellItem] = useState(null);
+  const [selectedRestockItem, setSelectedRestockItem] = useState(null);
+  const [isNewItemModalOpen, setIsNewItemModalOpen] = useState(false);
 
   const handleLoadSampleData = () => {
     if (window.confirm('Load sample kirana data? This will reset items and 7-day sales.')) {
       const fresh = seedSampleData();
       setStore(fresh);
-      setSelectedItem(null);
+      setSelectedSellItem(null);
+      setSelectedRestockItem(null);
     }
   };
 
-  const handleSelectItem = (item) => {
+  const handleSelectSellItem = (item) => {
     if (item.currentStock === 0) {
       alert(`"${item.name}" is out of stock! Switch to Stock In to add inventory.`);
       return;
     }
-    setSelectedItem(item);
+    setSelectedSellItem(item);
   };
 
   const handleConfirmSale = ({ itemId, quantity, unitPrice }) => {
     try {
       const { store: updatedStore } = recordSale({ itemId, quantity, unitPrice });
       setStore({ ...updatedStore });
-      setSelectedItem(null);
+      setSelectedSellItem(null);
     } catch (err) {
       alert(err.message || 'Failed to complete sale');
+    }
+  };
+
+  const handleConfirmRestock = ({ itemId, quantity, unitCost, receivedAt }) => {
+    try {
+      const { store: updatedStore } = addStock({ itemId, quantity, unitCost, receivedAt });
+      setStore({ ...updatedStore });
+      setSelectedRestockItem(null);
+    } catch (err) {
+      alert(err.message || 'Failed to restock');
+    }
+  };
+
+  const handleSaveNewItem = (itemData) => {
+    try {
+      const { store: updatedStore } = addItem(itemData);
+      setStore({ ...updatedStore });
+      setIsNewItemModalOpen(false);
+    } catch (err) {
+      alert(err.message || 'Failed to create new item');
     }
   };
 
@@ -53,19 +80,48 @@ export function App() {
       {activeTab === 'stock-out' && (
         <StockOutTab
           items={store.items}
-          onSelectItem={handleSelectItem}
+          onSelectItem={handleSelectSellItem}
           onLoadSampleData={handleLoadSampleData}
           onGoToStockIn={() => setActiveTab('stock-in')}
         />
       )}
 
-      {selectedItem && (
+      {activeTab === 'stock-in' && (
+        <StockInTab
+          items={store.items}
+          onSelectRestock={(item) => setSelectedRestockItem(item)}
+          onOpenNewItemModal={() => setIsNewItemModalOpen(true)}
+        />
+      )}
+
+      {/* Modals & Sheets */}
+      {selectedSellItem && (
         <SellBottomSheet
-          item={selectedItem}
-          onClose={() => setSelectedItem(null)}
+          item={selectedSellItem}
+          onClose={() => setSelectedSellItem(null)}
           onConfirmSale={handleConfirmSale}
         />
       )}
+
+      {selectedRestockItem && (
+        <RestockModal
+          item={selectedRestockItem}
+          onClose={() => setSelectedRestockItem(null)}
+          onConfirmRestock={handleConfirmRestock}
+        />
+      )}
+
+      {isNewItemModalOpen && (
+        <NewItemModal
+          onClose={() => setIsNewItemModalOpen(false)}
+          onSaveNewItem={handleSaveNewItem}
+        />
+      )}
+
+      <BottomNav
+        activeTab={activeTab}
+        onTabChange={(tab) => setActiveTab(tab)}
+      />
     </div>
   );
 }
